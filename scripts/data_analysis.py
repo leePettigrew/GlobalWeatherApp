@@ -51,16 +51,16 @@ country_avg_temp = df.groupby('country')['temperature_celsius'].mean().reset_ind
 
 # Sort by average temperature
 country_avg_temp_sorted = country_avg_temp.sort_values(by='temperature_celsius', ascending=False)
-
 print("\nAverage Temperature by Country (Top 10):")
 print(country_avg_temp_sorted.head(10))
 
 # Plot a histogram of temperatures
 plt.figure(figsize=(10, 6))
-sns.histplot(df['temperature_celsius'], bins=30, kde=True)
+sns.histplot(df['temperature_celsius'], bins=30, kde=True, color='royalblue')
 plt.title('Distribution of Global Temperatures')
 plt.xlabel('Temperature (°C)')
 plt.ylabel('Frequency')
+plt.tight_layout()
 
 # Save the figure
 histogram_path = os.path.join(figures_dir, 'temperature_histogram.png')
@@ -73,7 +73,7 @@ if not np.issubdtype(df['last_updated'].dtype, np.datetime64):
 
 # Filter data for a specific country (e.g., India)
 country_name = 'india'
-df_country = df[df['country'] == country_name]
+df_country = df[df['country'].str.lower() == country_name]
 
 # Check if the DataFrame is not empty
 if not df_country.empty:
@@ -82,11 +82,12 @@ if not df_country.empty:
 
     # Plot temperature over time
     plt.figure(figsize=(15, 7))
-    plt.plot(df_country['last_updated'], df_country['temperature_celsius'], marker='o', linestyle='-')
+    plt.plot(df_country['last_updated'], df_country['temperature_celsius'], marker='o', linestyle='-', color='tomato')
     plt.title(f'Temperature Changes Over Time in {country_name.title()}')
     plt.xlabel('Date')
     plt.ylabel('Temperature (°C)')
     plt.xticks(rotation=45)
+    plt.grid(True, linestyle='--', alpha=0.7)
     plt.tight_layout()
 
     # Save the figure
@@ -96,14 +97,61 @@ if not df_country.empty:
 else:
     print(f"No data available for country: {country_name}")
 
-# Optional: Additional visualization - Bar chart of average humidity by country
-# Compute average humidity by country
-country_avg_humidity = df.groupby('country')['humidity'].mean().reset_index()
+# Additional visualization - Top 10 locations with the highest precipitation
+top10_precip = df.sort_values(by='precip_mm', ascending=False).head(10)
 
-# Sort and select top 10 countries with highest average humidity
+plt.figure(figsize=(12, 6))
+sns.barplot(x='location_name', y='precip_mm', data=top10_precip, palette='Blues_d')
+plt.title('Top 10 Locations with Highest Precipitation')
+plt.xlabel('Location')
+plt.ylabel('Precipitation (mm)')
+plt.xticks(rotation=45)
+plt.tight_layout()
+
+# Save the figure
+precip_path = os.path.join(figures_dir, 'top10_highest_precipitation.png')
+plt.savefig(precip_path)
+plt.show()
+
+# Average wind speed by country
+country_avg_wind = df.groupby('country')['wind_kph'].mean().reset_index()
+top10_wind_countries = country_avg_wind.sort_values(by='wind_kph', ascending=False).head(10)
+
+plt.figure(figsize=(12, 6))
+sns.barplot(x='country', y='wind_kph', data=top10_wind_countries, palette='coolwarm')
+plt.title('Top 10 Countries with Highest Average Wind Speed')
+plt.xlabel('Country')
+plt.ylabel('Average Wind Speed (kph)')
+plt.xticks(rotation=45)
+plt.tight_layout()
+
+# Save the figure
+wind_path = os.path.join(figures_dir, 'top10_avg_wind_speed.png')
+plt.savefig(wind_path)
+plt.show()
+
+# Line Plot of Average Daily Temperature Globally
+df['date'] = df['last_updated'].dt.date
+avg_temp_per_day = df.groupby('date')['temperature_celsius'].mean().reset_index()
+
+plt.figure(figsize=(14, 7))
+plt.plot(avg_temp_per_day['date'], avg_temp_per_day['temperature_celsius'], marker='o', color='royalblue')
+plt.title('Average Global Temperature per Day')
+plt.xlabel('Date')
+plt.ylabel('Average Temperature (°C)')
+plt.xticks(rotation=45)
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.tight_layout()
+
+# Save the figure
+avg_temp_path = os.path.join(figures_dir, 'avg_global_temp_per_day.png')
+plt.savefig(avg_temp_path)
+plt.show()
+
+# Optional: Bar chart of average humidity by country
+country_avg_humidity = df.groupby('country')['humidity'].mean().reset_index()
 top10_humid_countries = country_avg_humidity.sort_values(by='humidity', ascending=False).head(10)
 
-# Plot bar chart
 plt.figure(figsize=(12, 6))
 sns.barplot(x='country', y='humidity', data=top10_humid_countries, palette='viridis')
 plt.title('Top 10 Countries with Highest Average Humidity')
@@ -113,9 +161,6 @@ plt.xticks(rotation=45)
 plt.tight_layout()
 
 # Save the figure
-bar_chart_path = os.path.join(figures_dir, 'top10_humid_countries.png')
-plt.savefig(bar_chart_path)
+humidity_path = os.path.join(figures_dir, 'top10_humid_countries.png')
+plt.savefig(humidity_path)
 plt.show()
-
-
-# shows future warning, can ignore.

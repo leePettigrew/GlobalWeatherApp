@@ -237,3 +237,40 @@ python scripts/kafka_consumer.py
 **Run MongoDB Queries:**
 - Use the Filter and Sort fields in MongoDB Compass.
 - Copy queries from `queries/mongodb_queries.txt`.
+
+### 5. Streamlit Web Application
+
+**Setup:**
+- Ensure that the Flask API is running locally or adjust the Streamlit app to read data directly from the local CSV for easier deployment.
+- The Streamlit app provides two sections:
+  - **Data Dashboard:** Visualize filtered weather data with options to filter by country and date.
+  - **Live Data Updates:** Display live weather data streamed through Kafka.
+
+**Run Locally:**
+```bash
+streamlit run scripts/streamlit_app.py
+```
+
+### Hosted Streamlit App
+
+The Streamlit app is deployed on Streamlit Cloud. You can access the live application using the following link:
+
+[https://globalweatherapp-ju74srmfvtzuxd2wqop9ae.streamlit.app/](#)
+
+
+### Additional Notes
+- Ensure that the Flask API is running before starting the Streamlit app for live data streaming.
+- Adjust Kafka configuration (e.g., `bootstrap.servers`) based on your local setup.
+- This project is designed to be a learning experience and showcases end-to-end data processing, analysis, and visualization techniques.
+
+### Credits
+- Weather data provided by Kaggle - Global Weather Repository.
+- Built using Python, Pandas, Streamlit, Flask, MySQL, MongoDB, and Apache Kafka.
+
+### Contact Information
+For any queries or collaboration, feel free to reach out:
+
+- **Name:** Lee Pettigrew
+- **Email:** X20730039@student.ncirl.ie
+
+
