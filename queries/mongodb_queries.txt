@@ -1,0 +1,54 @@
+{
+  filter: {
+    temperature_celsius: {
+      $gt: 35
+    },
+    precip_mm: {
+      $gt: 1
+    }
+  }
+}
+
+
+{
+  sort: {
+    precip_mm: -1
+  },
+  limit: 3
+}
+
+{
+  sort: {
+    precip_mm: 1
+  },
+  limit: 3
+}
+
+{
+  sort: {
+    temperature_celsius: 1
+  },
+  limit: 3
+}
+
+{
+  sort: {
+    temperature_celsius: -1
+  },
+  limit: 3
+}
+
+{
+  filter: {
+    last_updated: RegExp("^2024-07")
+  }
+}
+
+{
+  filter: {
+    temperature_celsius: {
+      $gte: 45
+    }
+  }
+}
+
