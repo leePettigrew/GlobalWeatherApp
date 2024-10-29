@@ -83,7 +83,7 @@ GlobalWeatherApp/
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your_username/GlobalWeatherDataProject.git
+git clone https://github.com/leePettigrew/GlobalWeatherApp.git
 cd GlobalWeatherDataProject
 ```
 
