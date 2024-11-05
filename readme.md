@@ -255,7 +255,7 @@ streamlit run scripts/streamlit_app.py
 
 The Streamlit app is deployed on Streamlit Cloud. You can access the live application using the following link:
 
-[https://globalweatherapp-ju74srmfvtzuxd2wqop9ae.streamlit.app/](#)
+https://globalweatherapp-ju74srmfvtzuxd2wqop9ae.streamlit.app/
 
 
 ### Additional Notes
